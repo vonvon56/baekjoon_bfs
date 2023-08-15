@@ -1,1 +1,58 @@
-print('hello world')
+#나의 풀이
+from collections import deque
+com = int(input())
+lines = int(input())
+matrix = [list(map(int,input().split())) for _ in range(lines)]
+
+queue = deque()
+visited = []
+queue.append(1)
+visited.append(1)
+count = 0
+
+while queue:
+    #print(queue)
+    temp = queue.popleft()
+    count += 1
+    included = []
+    for line in matrix:
+        if temp in line:
+            for element in line:
+                if element != temp:
+                    included.append(element)
+    for element in included:
+        #print(element)
+        if element not in visited:
+            queue.append(element)
+            visited.append(element)
+
+print(count-1)
+
+
+#개선본: 미리 양방향 그래프 저장.
+from collections import deque
+com = int(input())
+lines = int(input())
+lst = [[] for _ in range(com+1)]
+for _ in range(lines):
+    a,b = map(int,input().split())
+    lst[a].append(b)
+    lst[b].append(a)
+
+queue = deque()
+visited = []
+queue.append(1)
+visited.append(1)
+count = 0
+
+while queue:
+    #print(queue)
+    count += 1
+    temp = queue.popleft()
+    for element in lst[temp]:
+        if element not in visited:
+            queue.append(element)
+            visited.append(element)
+    
+
+print(count-1)
